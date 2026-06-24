@@ -1,0 +1,13 @@
+services:
+  burrow-tunnels:
+    container_name: burrow
+#    image: beastarman/burrow:latest
+    build: .
+    restart: unless-stopped
+    environment:
+      SSHKEY: ${SSHKEY} # set SSHKEY variable from .env file
+    volumes:
+      - ./keys:/root/.ssh # mount keys folder into the container. 1 key for all connections
+      - ./tunnels.conf:/config/tunnels.conf # mount the tunnel configuration file into the container
+    ports:
+      - 10000-10050:10000-10050  # set number of ports as required
